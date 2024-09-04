@@ -5,9 +5,13 @@ export const fetchPokemon = async () => {
 
     try {
         const response = await fetch(`${urlPokemon}/pokemon?limit=150`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
         const data = await response.json();
-        console.log(data.results)
+        return data.results
     } catch (error) {
         console.error("Error al obtener los Pokémon:", error);
+        throw error;
     }
 }

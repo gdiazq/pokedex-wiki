@@ -2,26 +2,36 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
+import { BeatLoader } from "react-spinners"
 import Navbar  from '@/components/layout/Navbar'
 import { fetchPokemon } from '@/app/api/fetchPokemon'
 
+interface Pokemon {
+  name: string;
+}
 
-export default function Home ({ initialPokemon }: { initialPokemon: any }) {
-  const [pokemon, setPokemon] = useState(initialPokemon);
+export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | null }) {
+  const [pokemon, setPokemon] = useState<Pokemon[]>(initialPokemon || []);
+  const [loading, setLoading] = useState<boolean>(!initialPokemon);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!initialPokemon) {
       const loadPokemon = async () => {
-        const fetchedPokemon = await fetchPokemon();
-        setPokemon(fetchedPokemon);
+        try {
+          const fetchedPokemon = await fetchPokemon();
+          setPokemon(fetchedPokemon);
+        } catch (error) {
+          setError('Error al cargar los Pokémon');
+        } finally {
+          setLoading(false);
+        }
       };
       loadPokemon();
+    } else {
+      setLoading(false);
     }
   }, [initialPokemon]);
-
-  if (!pokemon) {
-    return <p>Cargando Pokémon...</p>;
-  }
 
   return (
     <>
@@ -32,13 +42,17 @@ export default function Home ({ initialPokemon }: { initialPokemon: any }) {
             Pokedex App
           </h1>
           <div>
-            <ul>
-              {pokemon.map((p: { name: string; }, index: React.Key | null | undefined) => (
-                <li key={index}>
-                  {p.name.charAt(0).toUpperCase() + p.name.slice(1)}
-                </li>
-              ))}
-            </ul>
+            { loading ? (
+               <BeatLoader />
+            ) : (
+              <ul>
+                {pokemon.map((p, index) => (
+                  <li key={index}>
+                    {p.name.charAt(0).toUpperCase() + p.name.slice(1)}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </main>
