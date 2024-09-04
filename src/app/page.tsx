@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { BeatLoader } from "react-spinners"
 import Navbar  from '@/components/layout/Navbar'
-import { fetchPokemon } from '@/app/api/fetchPokemon'
+import { fetchPokemonKanto } from '@/app/api/fetchPokemonRegion/fetchPokemonKanto'
 
 interface Pokemon {
   name: string;
@@ -19,7 +19,7 @@ export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | n
     if (!initialPokemon) {
       const loadPokemon = async () => {
         try {
-          const fetchedPokemon = await fetchPokemon();
+          const fetchedPokemon = await fetchPokemonKanto();
           setPokemon(fetchedPokemon);
         } catch (error) {
           setError('Error al cargar los Pokémon');

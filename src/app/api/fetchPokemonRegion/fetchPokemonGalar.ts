@@ -1,10 +1,8 @@
 'use server'
 
-export const fetchPokemon = async () => {
-    const urlPokemon = "https://pokeapi.co/api/v2"
-
+export const fetchPokemonGalar = async () => {
     try {
-        const response = await fetch(`${urlPokemon}/pokemon?limit=150`);
+        const response = await fetch(`${process.env.URL_API}/pokemon?offset=809&limit=89`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
