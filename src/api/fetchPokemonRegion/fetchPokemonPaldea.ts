@@ -1,6 +1,6 @@
 'use server'
 
-export const fetchPokemonGalar = async () => {
+export const fetchPokemonPaldea = async () => {
     try {
         const response = await fetch(`${process.env.URL_API}/pokemon?offset=905&limit=120`);
         if (!response.ok) {
