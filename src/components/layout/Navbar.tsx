@@ -70,54 +70,64 @@ export default function App() {
                         <DropdownItem
                             key="Johto"
                             description="Region Johto is the second region in the Pokémon series and contains 100 Pokémon."
+                            onClick={() => router.push("/johto")}
                         >
                             Johto
                         </DropdownItem>
                         <DropdownItem
                             key="Hoenn"
                             description="Region Hoenn is the third region in the Pokémon series and contains 135 Pokémon."
+                            onClick={() => router.push("/hoenn")}
+                            
                         >
                             Hoenn
                         </DropdownItem>
                         <DropdownItem
                             key="Sinnoh"
                             description="Region Sinnoh is the fourth region in the Pokémon series and contains 107 Pokémon."
+                            onClick={() => router.push("/sinnoh")}
                         >
                             Sinnoh
                         </DropdownItem>
                         <DropdownItem
                             key="Unova"
                             description="Region Unova is the fifth region in the Pokémon series and contains 156 Pokémon."
+                            onClick={() => router.push("/unova")}
                         >
                             Unova
                         </DropdownItem>
                         <DropdownItem
                             key="Kalos"
                             description="Region Kalos is the sixth region in the Pokémon series and contains 72 Pokémon."
+                            onClick={() => router.push("/kalos")}
                         >
                             Kalos
                         </DropdownItem>
                         <DropdownItem
                             key="Alola"
                             description="Region Alola is the seventh region in the Pokémon series and contains 86 Pokémon."
+                            onClick={() => router.push("/alola")}
                         >
                             Alola
                         </DropdownItem>
                         <DropdownItem
                             key="Galar"
                             description="Region Galar is the eighth region in the Pokémon series and contains 89 Pokémon."
+                            onClick={() => router.push("/galar")}
                         >
                             Galar
                         </DropdownItem>
                         <DropdownItem
                             key="Husui"
                             description="Region Husui is the ninth region in the Pokémon series and contains 7 Pokémon."
+                            onClick={() => router.push("/husui")}
                         >
                             Husui
                         </DropdownItem>
                         <DropdownItem
                             key="Paldea"
                             description="Region Paldea is the tenth region in the Pokémon series and contains 120 Pokémon."
+                            onClick={() => router.push("/paldea")}
                         >
                             Paldea
                         </DropdownItem>

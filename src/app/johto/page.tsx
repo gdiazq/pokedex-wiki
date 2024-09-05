@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { BeatLoader } from "react-spinners"
-import { fetchPokemonKanto } from '@/api/fetchPokemonRegion/fetchPokemonKanto';
+import { fetchPokemonJohto } from '@/api/fetchPokemonRegion/fetchPokemonJohto';
 import Navbar from '@/components/layout/Navbar';
 
 interface Pokemon {
@@ -18,7 +18,7 @@ export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | n
       if (!initialPokemon) {
         const loadPokemon = async () => {
           try {
-            const fetchedPokemon = await fetchPokemonKanto();
+            const fetchedPokemon = await fetchPokemonJohto();
             setPokemon(fetchedPokemon);
           } catch (error) {
             setError('Error al cargar los Pokémon');
