@@ -8,22 +8,31 @@ interface PokemonDetails {
     id: number;
     name: string;
     sprites: {
-      front_default: string; 
+      front_default: string;
+      other: {
+        dream_world: {
+          front_default: string;
+        };
+      };
     };
     types: Array<{ 
-      type: { name: string } 
+      type: { 
+        name: string 
+      } 
     }>;
     weight: number;
     height: number;
     abilities: Array<{ 
-      ability: { name: string } 
+      ability: { 
+        name: string 
+      } 
     }>;
 }
-  
 
 export function PokemonCard({ pokemon }: { pokemon: PokemonDetails }) {
+
     const [isFlipped, setIsFlipped] = useState(false);
-  
+
     const handleFlip = () => setIsFlipped(!isFlipped);
   
     return (
@@ -35,26 +44,25 @@ export function PokemonCard({ pokemon }: { pokemon: PokemonDetails }) {
         >
           {/* Front of the card */}
           <Card className="absolute w-full h-full [backface-visibility:hidden]">
-            <CardBody className="overflow-visible p-0">
-              <Image
-                shadow="sm"
-                radius="lg"
-                width="100%"
-                alt={`${pokemon.name} sprite`}
-                className="w-full object-contain h-[300px] bg-gray-100"
-                src={pokemon.sprites.front_default}
-              />
+            <CardBody className="overflow-visible p-0 flex flex-col items-center justify-center">
+                <div className="w-48 h-48 flex items-center justify-center">
+                    <Image
+                        alt={`${pokemon.name} sprite`}
+                        className="object-contain max-w-full max-h-full"
+                        src={pokemon.sprites.other.dream_world.front_default}
+                    />
+                </div>
             </CardBody>
             <CardFooter className="text-small justify-between">
-              <b className="capitalize">{pokemon.name}</b>
-              <Button
-                isIconOnly
-                color="primary"
-                aria-label={`View details of ${pokemon.name}`}
-                onClick={handleFlip}
-              >
-                <Info className="w-5 h-5" />
-              </Button>
+                <b className="capitalize">{pokemon.name}</b>
+                <Button
+                    isIconOnly
+                    color="primary"
+                    aria-label={`View details of ${pokemon.name}`}
+                    onClick={handleFlip}
+                >
+                    <Info className="w-5 h-5" />
+                </Button>
             </CardFooter>
           </Card>
   
