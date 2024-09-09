@@ -68,7 +68,7 @@ export function PokemonCard({ pokemon }: { pokemon: PokemonDetails }) {
   
           {/* Back of the card */}
           <Card className="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
-            <CardBody className="flex flex-col justify-center items-start p-4">
+            <CardBody className="flex flex-col justify-center items-center p-4">
               <h2 className="text-2xl font-bold mb-2 capitalize">{pokemon.name}</h2>
               <p><strong>Type:</strong> {pokemon.types.map(t => t.type.name).join(', ')}</p>
               <p><strong>Height:</strong> {pokemon.height / 10} m</p>
