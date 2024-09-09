@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu } from "@nextui-org/react";
-import { ChevronDown } from "../icons/Icons.jsx"
+import { ChevronDown } from "../icons/navbar/Icons.jsx"
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
 import { ThemeSwitch } from "@/components/providers/ThemeSwitch";

@@ -3,6 +3,24 @@
 import React, { useState } from 'react';
 import { Card, CardBody, CardFooter, Button, Image } from "@nextui-org/react"
 import { RotateCw, Info } from 'lucide-react'
+import Bug from '../icons/pokemon-types/bug.svg'
+import Dragon from '../icons/pokemon-types/dragon.svg'
+import Electric from '../icons/pokemon-types/electric.svg'
+import Fairy from '../icons/pokemon-types/fairy.svg'
+import Fighting from '../icons/pokemon-types/fighting.svg'
+import Fire from '../icons/pokemon-types/fire.svg'
+import Flying from '../icons/pokemon-types/flying.svg'
+import Ghost from '../icons/pokemon-types/ghost.svg'
+import Grass from '../icons/pokemon-types/grass.svg'
+import Ground from '../icons/pokemon-types/ground.svg'
+import Ice from '../icons/pokemon-types/ice.svg'
+import Dark from '../icons/pokemon-types/Dark.svg'
+import Normal from '../icons/pokemon-types/normal.svg'
+import Poison from '../icons/pokemon-types/poison.svg'
+import Psychic from '../icons/pokemon-types/psychic.svg'
+import Rock from '../icons/pokemon-types/rock.svg'
+import Steel from '../icons/pokemon-types/steel.svg'
+import Water from '../icons/pokemon-types/water.svg'
 
 interface PokemonDetails {
     id: number;
