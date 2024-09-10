@@ -14,7 +14,7 @@ import ghost from '../icons/pokemon-types/ghost.svg';
 import grass from '../icons/pokemon-types/grass.svg';
 import ground from '../icons/pokemon-types/ground.svg';
 import ice from '../icons/pokemon-types/ice.svg';
-import dark from '../icons/pokemon-types/dark.svg';  // Cambié la D mayúscula a minúscula para asegurarte de que el nombre del archivo sea correcto
+import dark from '../icons/pokemon-types/dark.svg'; 
 import normal from '../icons/pokemon-types/normal.svg';
 import poison from '../icons/pokemon-types/poison.svg';
 import psychic from '../icons/pokemon-types/psychic.svg';
