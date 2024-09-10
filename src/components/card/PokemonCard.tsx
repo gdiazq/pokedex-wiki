@@ -1,48 +1,30 @@
 import React, { useState } from 'react';
-import { Card, CardBody, CardFooter, Button, Image } from "@nextui-org/react";
+import { Card, CardBody, CardFooter, Button  } from "@nextui-org/react";
+import { Image as ImageNext  } from '@nextui-org/react';
 import { RotateCw, Info } from 'lucide-react';
 
-// Importa correctamente los íconos como URLs
-import bug from '../icons/pokemon-types/bug.svg';
-import dragon from '../icons/pokemon-types/dragon.svg';
-import electric from '../icons/pokemon-types/electric.svg';
-import fairy from '../icons/pokemon-types/fairy.svg';
-import fighting from '../icons/pokemon-types/fighting.svg';
-import fire from '../icons/pokemon-types/fire.svg';
-import flying from '../icons/pokemon-types/flying.svg';
-import ghost from '../icons/pokemon-types/ghost.svg';
-import grass from '../icons/pokemon-types/grass.svg';
-import ground from '../icons/pokemon-types/ground.svg';
-import ice from '../icons/pokemon-types/ice.svg';
-import dark from '../icons/pokemon-types/dark.svg'; 
-import normal from '../icons/pokemon-types/normal.svg';
-import poison from '../icons/pokemon-types/poison.svg';
-import psychic from '../icons/pokemon-types/psychic.svg';
-import rock from '../icons/pokemon-types/rock.svg';
-import steel from '../icons/pokemon-types/steel.svg';
-import water from '../icons/pokemon-types/water.svg';
-
-// Objeto que asocia cada tipo de Pokémon con su ícono
 const pokemonTypes: { [key: string]: { icon: string } } = {
-  fire: { icon: fire },
-  grass: { icon: grass },
-  fairy: { icon: fairy },
-  dragon: { icon: dragon },
-  water: { icon: water },
-  electric: { icon: electric },
-  dark: { icon: dark },
-  psychic: { icon: psychic },
-  ground: { icon: ground },
-  flying: { icon: flying },
-  ghost: { icon: ghost },
-  fighting: { icon: fighting },
-  normal: { icon: normal },
-  poison: { icon: poison },
-  rock: { icon: rock },
-  bug: { icon: bug },
-  steel: { icon: steel },
-  ice: { icon: ice },
+  fire: { icon: '/pokemon-types/fire.svg' },
+  grass: { icon: '/pokemon-types/grass.svg' },
+  fairy: { icon: '/pokemon-types/fairy.svg' },
+  dragon: { icon: '/pokemon-types/dragon.svg' },
+  water: { icon: '/pokemon-types/water.svg' },
+  electric: { icon: '/pokemon-types/electric.svg' },
+  dark: { icon: '/pokemon-types/dark.svg' },
+  psychic: { icon: '/pokemon-types/psychic.svg' },
+  ground: { icon: '/pokemon-types/ground.svg' },
+  flying: { icon: '/pokemon-types/flying.svg' },
+  ghost: { icon: '/pokemon-types/ghost.svg' },
+  fighting: { icon: '/pokemon-types/fighting.svg' },
+  normal: { icon: '/pokemon-types/normal.svg' },
+  poison: { icon: '/pokemon-types/poison.svg' },
+  rock: { icon: '/pokemon-types/rock.svg' },
+  bug: { icon: '/pokemon-types/bug.svg' },
+  steel: { icon: '/pokemon-types/steel.svg' },
+  ice: { icon: '/pokemon-types/ice.svg' },
+    
 };
+
 
 interface PokemonDetails {
   id: number;
@@ -85,7 +67,7 @@ export function PokemonCard({ pokemon }: { pokemon: PokemonDetails }) {
         <Card className="absolute w-full h-full [backface-visibility:hidden]">
           <CardBody className="overflow-visible p-0 flex flex-col items-center justify-center">
             <div className="w-48 h-48 flex items-center justify-center">
-              <Image
+              <ImageNext
                 alt={`${pokemon.name} sprite`}
                 className="object-contain max-w-full max-h-full"
                 src={pokemon.sprites.other.dream_world.front_default}
@@ -102,7 +84,7 @@ export function PokemonCard({ pokemon }: { pokemon: PokemonDetails }) {
                     key={type.type.name}
                     className="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-full"
                   >
-                    <Image src={typeInfo.icon} alt={`${type.type.name} icon`} className="w-3 h-3 mr-1" />
+                    <ImageNext src={typeInfo.icon} alt={`${type.type.name} icon`} className="w-3 h-3 mr-1" />
                     <span>{type.type.name}</span>
                   </div>
                 );
