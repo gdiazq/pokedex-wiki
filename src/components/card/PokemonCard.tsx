@@ -1,30 +1,29 @@
 import React, { useState } from 'react';
 import { Card, CardBody, CardFooter, Button  } from "@nextui-org/react";
 import { Image as ImageNext  } from '@nextui-org/react';
+import Image from 'next/image';
 import { RotateCw, Info } from 'lucide-react';
 
-const pokemonTypes: { [key: string]: { icon: string } } = {
-  fire: { icon: '/pokemon-types/fire.svg' },
-  grass: { icon: '/pokemon-types/grass.svg' },
-  fairy: { icon: '/pokemon-types/fairy.svg' },
-  dragon: { icon: '/pokemon-types/dragon.svg' },
-  water: { icon: '/pokemon-types/water.svg' },
-  electric: { icon: '/pokemon-types/electric.svg' },
-  dark: { icon: '/pokemon-types/dark.svg' },
-  psychic: { icon: '/pokemon-types/psychic.svg' },
-  ground: { icon: '/pokemon-types/ground.svg' },
-  flying: { icon: '/pokemon-types/flying.svg' },
-  ghost: { icon: '/pokemon-types/ghost.svg' },
-  fighting: { icon: '/pokemon-types/fighting.svg' },
-  normal: { icon: '/pokemon-types/normal.svg' },
-  poison: { icon: '/pokemon-types/poison.svg' },
-  rock: { icon: '/pokemon-types/rock.svg' },
-  bug: { icon: '/pokemon-types/bug.svg' },
-  steel: { icon: '/pokemon-types/steel.svg' },
-  ice: { icon: '/pokemon-types/ice.svg' },
-    
+const pokemonTypes: { [key: string]: { icon: string, color: string } } = {
+  fire: { icon: '/pokemon-types/fire.svg', color: 'bg-red-500' },
+  grass: { icon: '/pokemon-types/grass.svg', color: 'bg-green-500' },
+  fairy: { icon: '/pokemon-types/fairy.svg', color: 'bg-pink-400' },
+  dragon: { icon: '/pokemon-types/dragon.svg', color: 'bg-purple-600' },
+  water: { icon: '/pokemon-types/water.svg', color: 'bg-blue-500' },
+  electric: { icon: '/pokemon-types/electric.svg', color: 'bg-yellow-400' },
+  dark: { icon: '/pokemon-types/dark.svg', color: 'bg-gray-800' },
+  psychic: { icon: '/pokemon-types/psychic.svg', color: 'bg-pink-600' },
+  ground: { icon: '/pokemon-types/ground.svg', color: 'bg-yellow-700' },
+  flying: { icon: '/pokemon-types/flying.svg', color: 'bg-indigo-400' },
+  ghost: { icon: '/pokemon-types/ghost.svg', color: 'bg-purple-800' },
+  fighting: { icon: '/pokemon-types/fighting.svg', color: 'bg-orange-600' },
+  normal: { icon: '/pokemon-types/normal.svg', color: 'bg-zinc-400' },
+  poison: { icon: '/pokemon-types/poison.svg', color: 'bg-violet-800' },
+  rock: { icon: '/pokemon-types/rock.svg', color: 'bg-stone-800' },
+  bug: { icon: '/pokemon-types/bug.svg', color: 'bg-lime-300' },
+  steel: { icon: '/pokemon-types/steel.svg', color: 'bg-gray-500' },
+  ice: { icon: '/pokemon-types/ice.svg', color: 'bg-sky-400' },   
 };
-
 
 interface PokemonDetails {
   id: number;
@@ -84,7 +83,7 @@ export function PokemonCard({ pokemon }: { pokemon: PokemonDetails }) {
                     key={type.type.name}
                     className="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-full"
                   >
-                    <ImageNext src={typeInfo.icon} alt={`${type.type.name} icon`} className="w-3 h-3 mr-1" />
+                    <Image src={typeInfo.icon} alt={`${type.type.name} icon`} width={4} height={4} className={`${typeInfo.color} rounded-full w-4 h-4 mr-1`} />
                     <span>{type.type.name}</span>
                   </div>
                 );
