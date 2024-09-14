@@ -1,4 +1,3 @@
-// Objective: Create the main page of the app
 'use client'
 
 import React, { useEffect, useState } from 'react';
@@ -43,6 +42,8 @@ export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | n
   const [error, setError] = useState<string | null>(null);
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
   const [offset, setOffset] = useState<number>(0);
+  const [filteredPokemon, setFilteredPokemon] = useState<PokemonDetails[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   const loadPokemon = async () => {
     setLoading(true);
@@ -71,6 +72,14 @@ export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | n
       loadPokemon();
     }
   }, [initialPokemon]);
+ 
+  useEffect(() => {
+    const filtered = pokemonDetails.filter((p) =>
+      p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredPokemon(filtered);
+  }, [searchTerm, pokemonDetails]);
+  
 
   return (
     <>
@@ -80,8 +89,17 @@ export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | n
           <h1 className="text-5xl font-semibold text-black dark:text-white drop-shadow-md text-center">
             Pokedex App
           </h1>
+          <div className="flex justify-center mb-6">
+            <input
+              type="text"
+              placeholder="Buscar Pokémon por nombre..."
+              className="px-4 py-2 border rounded-lg w-full max-w-md"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)} // Actualizar el término de búsqueda
+            />
+          </div>
           <div>
-            {loading ? (
+            {loading && pokemonDetails.length === 0 ? (
               <div className="flex justify-center">
                 <BeatLoader />
               </div>
@@ -90,9 +108,13 @@ export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | n
             ) : (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {pokemonDetails.map((p) => (
-                    <PokemonCard key={p.id} pokemon={p} />
-                  ))}
+                  {filteredPokemon.length > 0 ? (
+                    filteredPokemon.map((p) => (
+                      <PokemonCard key={p.id} pokemon={p} />
+                    ))
+                  ) : (
+                    <p className="text-center">No se encontraron Pokémon</p>
+                  )}
                 </div>
                 <div className="flex justify-center mt-6">
                   <button
