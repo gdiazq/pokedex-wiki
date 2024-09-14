@@ -10,6 +10,31 @@ interface Pokemon {
   name: string;
 }
 
+interface PokemonDetails {
+  id: number;
+  name: string;
+  sprites: {
+    front_default: string;
+    other: {
+      dream_world: {
+        front_default: string;
+      };
+    };
+  };
+  types: Array<{ 
+    type: { 
+      name: string 
+    } 
+  }>;
+  weight: number;
+  height: number;
+  abilities: Array<{ 
+    ability: { 
+      name: string 
+    } 
+  }>;
+}
+
 export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | null }) {
   const [pokemon, setPokemon] = useState<Pokemon[]>(initialPokemon || []);
   const [loading, setLoading] = useState<boolean>(!initialPokemon);
