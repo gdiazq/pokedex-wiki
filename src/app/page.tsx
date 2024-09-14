@@ -1,10 +1,10 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { BeatLoader } from "react-spinners"
-import Navbar  from '@/components/layout/Navbar'
-import { fetchAllPokemon } from '@/api/fetchAllPokemon/fetchAllPokemon'
-import { PokemonCard } from '@/components/card/PokemonCard'
+import { BeatLoader } from "react-spinners";
+import Navbar from '@/components/layout/Navbar';
+import { fetchAllPokemon } from '@/api/fetchAllPokemon/fetchAllPokemon';
+import { PokemonCard } from '@/components/card/PokemonCard';
 
 interface Pokemon {
   name: string;
@@ -68,18 +68,16 @@ export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | n
   };
 
   useEffect(() => {
-    if (!initialPokemon) {
       loadPokemon();
-    }
-  }, [initialPokemon]);
- 
+  }, []);
+
   useEffect(() => {
-    const filtered = pokemonDetails.filter((p) =>
-      p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    setFilteredPokemon(
+      pokemonDetails.filter((p) =>
+        p.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
     );
-    setFilteredPokemon(filtered);
-  }, [searchTerm, pokemonDetails]);
-  
+  }, [searchTerm, pokemon]);
 
   return (
     <>
@@ -97,6 +95,7 @@ export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | n
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)} // Actualizar el término de búsqueda
             />
+
           </div>
           <div>
             {loading && pokemonDetails.length === 0 ? (
@@ -110,7 +109,7 @@ export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | n
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {filteredPokemon.length > 0 ? (
                     filteredPokemon.map((p) => (
-                      <PokemonCard key={p.id} pokemon={p} />
+                      <PokemonCard key={`${p.id}-${p.name}`} pokemon={p} />
                     ))
                   ) : (
                     <p className="text-center">No se encontraron Pokémon</p>
