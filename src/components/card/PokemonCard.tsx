@@ -34,6 +34,9 @@ interface PokemonDetails {
       dream_world: {
         front_default: string;
       };
+      'official-artwork': {
+        front_default: string;
+      };
     };
   };
   types: Array<{ 
@@ -69,7 +72,7 @@ export function PokemonCard({ pokemon }: { pokemon: PokemonDetails }) {
               <ImageNext
                 alt={`${pokemon.name} sprite`}
                 className="object-contain max-w-full max-h-full"
-                src={pokemon.sprites.other.dream_world.front_default}
+                src={pokemon.sprites.other.dream_world.front_default || pokemon.sprites.other['official-artwork'].front_default}
               />
             </div>
           </CardBody>
