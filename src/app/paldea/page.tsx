@@ -36,9 +36,9 @@ interface PokemonDetails {
   }>;
 }
 
-export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | null }) {
-  const [pokemon, setPokemon] = useState<Pokemon[]>(initialPokemon || []);
-  const [loading, setLoading] = useState<boolean>(!initialPokemon);
+export default function Home() {
+  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
 
@@ -63,12 +63,8 @@ export default function Home({ initialPokemon }: { initialPokemon: Pokemon[] | n
       }
     };
 
-    if (!initialPokemon) {
-      loadPokemon();
-    } else {
-      setLoading(false);
-    }
-  }, [initialPokemon]);
+    loadPokemon();
+  }, []);
 
   return (
     <>
