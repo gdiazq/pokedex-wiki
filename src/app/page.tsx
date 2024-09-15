@@ -80,7 +80,7 @@ export default function Home() {
         p.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
-  }, [searchTerm, pokemon]);
+  }, [searchTerm, pokemonDetails]);
 
   return (
     <>
