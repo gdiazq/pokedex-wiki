@@ -81,7 +81,7 @@ export function PokemonCard({ pokemon }: { pokemon: PokemonDetails }) {
                 return (
                   <div
                     key={type.type.name}
-                    className="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-full"
+                    className="flex items-center gap-1 px-2 py-1 bg-gray-100 text-black dark:text-white rounded-full"
                   >
                     <Image src={typeInfo.icon} alt={`${type.type.name} icon`} width={4} height={4} className={`${typeInfo.color} rounded-full w-4 h-4 mr-1`} />
                     <span>{type.type.name}</span>
