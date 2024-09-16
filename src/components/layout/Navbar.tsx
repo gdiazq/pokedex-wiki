@@ -10,16 +10,102 @@ import { ThemeSwitch } from "@/components/providers/ThemeSwitch";
 export default function App() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const router = useRouter();
+    const icons = {
+        chevron: <ChevronDown fill="currentColor" size={16} height={16} width={16} />
+    };
 
     const menuItems = [
-        "Pokemon",
-        "By Region",
-        "Integrations"
-    ];
+        <NavbarContent className="flex flex-col justify-start">
+            <NavbarItem>
+                <Link className="hover:text-blue-500" color="foreground" href="/">
+                    Pokemon
+                </Link>
+            </NavbarItem>
+            <Dropdown>
+                <NavbarItem>
+                    <DropdownTrigger>
+                        <Button
+                            disableRipple
+                            className="p-0 bg-transparent data-[hover=true]:bg-transparent hover:text-blue-500"
+                            endContent={icons.chevron}
+                            radius="sm"
+                            variant="light"
+                        >
+                            By Region
+                        </Button>
+                    </DropdownTrigger>
+                </NavbarItem>
+                <DropdownMenu>
+                    <DropdownItem
+                        key="kanto"
+                        onClick={() => router.push("/kanto")}
+                    >
+                        Kanto
+                    </DropdownItem>
+                    <DropdownItem
+                        key="Johto"
+                        onClick={() => router.push("/johto")}
+                    >
+                        Johto
+                    </DropdownItem>
+                    <DropdownItem
+                        key="Hoenn"
+                        onClick={() => router.push("/hoenn")}
 
-    const icons = {
-        chevron: <ChevronDown fill="currentColor" size={16} height={16} width={16} />,
-    }
+                    >
+                        Hoenn
+                    </DropdownItem>
+                    <DropdownItem
+                        key="Sinnoh"
+                        onClick={() => router.push("/sinnoh")}
+                    >
+                        Sinnoh
+                    </DropdownItem>
+                    <DropdownItem
+                        key="Unova"
+                        onClick={() => router.push("/unova")}
+                    >
+                        Unova
+                    </DropdownItem>
+                    <DropdownItem
+                        key="Kalos"
+                        onClick={() => router.push("/kalos")}
+                    >
+                        Kalos
+                    </DropdownItem>
+                    <DropdownItem
+                        key="Alola"
+                        onClick={() => router.push("/alola")}
+                    >
+                        Alola
+                    </DropdownItem>
+                    <DropdownItem
+                        key="Galar"
+                        onClick={() => router.push("/galar")}
+                    >
+                        Galar
+                    </DropdownItem>
+                    <DropdownItem
+                        key="Husui"
+                        onClick={() => router.push("/husui")}
+                    >
+                        Husui
+                    </DropdownItem>
+                    <DropdownItem
+                        key="Paldea"
+                        onClick={() => router.push("/paldea")}
+                    >
+                        Paldea
+                    </DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
+            <NavbarItem>
+                <Link className="hover:text-blue-500" color="foreground" href="/">
+                    Integrations
+                </Link>
+            </NavbarItem>
+        </NavbarContent>
+    ];
 
     return (
         <Navbar className="w-full" onMenuOpenChange={setIsMenuOpen}>
