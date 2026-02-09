@@ -115,7 +115,7 @@ export default function App() {
                     className="sm:hidden"
                 />
                 <NavbarBrand>
-                    <Image className="font-bold text-inherit" src="/logo.png" width={80} height={80} priority={true} alt="logo" />
+                    <Image className="font-bold text-inherit" src="/logo.png" width={80} height={80} style={{ width: 'auto', height: 'auto' }} priority={true} alt="logo" />
                 </NavbarBrand>
             </NavbarContent>
 

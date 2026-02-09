@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { BeatLoader } from "react-spinners";
 import Navbar from '@/components/layout/Navbar';
 import { fetchAllPokemon } from '@/api/fetchAllPokemon/fetchAllPokemon';
@@ -25,17 +25,17 @@ interface PokemonDetails {
       };
     };
   };
-  types: Array<{ 
-    type: { 
-      name: string 
-    } 
+  types: Array<{
+    type: {
+      name: string
+    }
   }>;
   weight: number;
   height: number;
-  abilities: Array<{ 
-    ability: { 
-      name: string 
-    } 
+  abilities: Array<{
+    ability: {
+      name: string
+    }
   }>;
 }
 
@@ -44,14 +44,14 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
-  const [offset, setOffset] = useState<number>(0);
   const [filteredPokemon, setFilteredPokemon] = useState<PokemonDetails[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const offsetRef = useRef<number>(0);
 
-  const loadPokemon = async () => {
+  const loadPokemon = useCallback(async () => {
     setLoading(true);
     try {
-      const fetchedPokemon = await fetchAllPokemon(offset);
+      const fetchedPokemon = await fetchAllPokemon(offsetRef.current);
       setPokemon((prev) => [...prev, ...fetchedPokemon]);
 
       const detailsPromises = fetchedPokemon.map(async (p: { url: string }) => {
@@ -60,19 +60,23 @@ export default function Home() {
       });
 
       const details = await Promise.all(detailsPromises);
-      setPokemonDetails((prev) => [...prev, ...details]);
+      setPokemonDetails((prev) => {
+        const existingIds = new Set(prev.map((p) => p.id));
+        const newDetails = details.filter((d: PokemonDetails) => !existingIds.has(d.id));
+        return [...prev, ...newDetails];
+      });
 
-      setOffset((prev) => prev + 50); // Aumenta el offset
+      offsetRef.current += 50;
     } catch (error) {
       setError('Error al cargar los Pokémon');
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
       loadPokemon();
-  }, []);
+  }, [loadPokemon]);
 
   useEffect(() => {
     setFilteredPokemon(
@@ -110,14 +114,13 @@ export default function Home() {
             ) : (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {filteredPokemon.length > 0 ? (
-                    filteredPokemon.map((p) => (
-                      <PokemonCard key={`${p.id}-${p.name}`} pokemon={p} />
-                    ))
-                  ) : (
-                    <p className="text-center">No se encontraron Pokémon</p>
-                  )}
+                  {filteredPokemon.map((p) => (
+                    <PokemonCard key={`${p.id}-${p.name}`} pokemon={p} />
+                  ))}
                 </div>
+                {filteredPokemon.length === 0 && searchTerm && (
+                  <p className="text-center mt-4">No se encontraron Pokémon con &quot;{searchTerm}&quot;</p>
+                )}
                 <div className="flex justify-center mt-6">
                   <button
                     onClick={loadPokemon}

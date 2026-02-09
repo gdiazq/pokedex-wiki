@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Onest } from "next/font/google";
+import { cookies } from "next/headers";
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -15,8 +16,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+  const theme = cookieStore.get("theme")?.value || "dark";
+
   return (
-    <html lang="en">
+    <html lang="en" className={theme} style={{ colorScheme: theme }}>
       <body className={onest.className}>
         <Providers>
           {children}
