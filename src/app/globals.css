@@ -2,4 +2,96 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-main: #f4f7fb;
+  --bg-soft: #ffffffcc;
+  --surface: #ffffff;
+  --surface-strong: #edf3ff;
+  --text-main: #101828;
+  --text-muted: #475467;
+  --border: #d0d9e8;
+  --shadow: 0 18px 35px -26px rgba(15, 23, 42, 0.55);
+}
 
+.dark {
+  --bg-main: #081022;
+  --bg-soft: #0f1a32cc;
+  --surface: #12203e;
+  --surface-strong: #1a2e57;
+  --text-main: #e5ecff;
+  --text-muted: #b8c4e6;
+  --border: #28406f;
+  --shadow: 0 22px 36px -28px rgba(2, 8, 23, 0.95);
+}
+
+@layer base {
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    color: var(--text-main);
+    background:
+      radial-gradient(circle at 10% 15%, rgba(255, 205, 74, 0.2) 0%, transparent 30%),
+      radial-gradient(circle at 85% 10%, rgba(52, 211, 153, 0.12) 0%, transparent 32%),
+      radial-gradient(circle at 70% 85%, rgba(59, 130, 246, 0.2) 0%, transparent 38%),
+      var(--bg-main);
+  }
+}
+
+@layer components {
+  .page-wrap {
+    @apply mx-auto w-full max-w-7xl px-4 pb-12 pt-24 sm:px-6 lg:px-8;
+  }
+
+  .page-hero {
+    @apply mb-8 rounded-3xl border px-4 py-7 text-center shadow-lg sm:px-8;
+    border-color: var(--border);
+    background: var(--bg-soft);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow);
+  }
+
+  .page-title {
+    @apply text-3xl font-extrabold tracking-tight sm:text-5xl;
+    color: var(--text-main);
+  }
+
+  .page-subtitle {
+    @apply mx-auto mt-3 max-w-2xl text-sm sm:text-base;
+    color: var(--text-muted);
+  }
+
+  .pokemon-grid {
+    @apply grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
+
+  .search-input {
+    @apply w-full rounded-2xl border px-4 py-3 text-sm outline-none ring-0 transition focus:shadow-md sm:text-base;
+    border-color: var(--border);
+    color: var(--text-main);
+    background-color: var(--surface);
+  }
+
+  .search-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .search-input:focus {
+    border-color: #4f8cff;
+    box-shadow: 0 0 0 4px rgba(79, 140, 255, 0.2);
+  }
+
+  .primary-action {
+    @apply rounded-xl px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60;
+    background: linear-gradient(95deg, #2b6ef2 0%, #2f9dff 45%, #12b3c7 100%);
+    box-shadow: 0 14px 26px -16px rgba(37, 99, 235, 0.8);
+  }
+
+  .loading-shell {
+    @apply rounded-2xl border p-8 text-center;
+    border-color: var(--border);
+    background-color: var(--bg-soft);
+  }
+}

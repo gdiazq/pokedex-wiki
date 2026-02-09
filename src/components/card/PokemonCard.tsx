@@ -1,57 +1,9 @@
 import React, { useState } from 'react';
 import { Card, CardBody, CardFooter, Button  } from "@nextui-org/react";
-import { Image as ImageNext  } from '@nextui-org/react';
-import Image from 'next/image';
 import { RotateCw, Info } from 'lucide-react';
+import { PokemonDetails } from '@/types/pokemon';
+import { POKEMON_TYPE_COLORS } from '@/constants/pokemonTypes';
 
-const pokemonTypes: { [key: string]: { icon: string, color: string } } = {
-  fire: { icon: '/pokemon-types/fire.svg', color: 'bg-red-500' },
-  grass: { icon: '/pokemon-types/grass.svg', color: 'bg-green-500' },
-  fairy: { icon: '/pokemon-types/fairy.svg', color: 'bg-pink-400' },
-  dragon: { icon: '/pokemon-types/dragon.svg', color: 'bg-purple-600' },
-  water: { icon: '/pokemon-types/water.svg', color: 'bg-blue-500' },
-  electric: { icon: '/pokemon-types/electric.svg', color: 'bg-yellow-400' },
-  dark: { icon: '/pokemon-types/dark.svg', color: 'bg-gray-800' },
-  psychic: { icon: '/pokemon-types/psychic.svg', color: 'bg-pink-600' },
-  ground: { icon: '/pokemon-types/ground.svg', color: 'bg-yellow-700' },
-  flying: { icon: '/pokemon-types/flying.svg', color: 'bg-indigo-400' },
-  ghost: { icon: '/pokemon-types/ghost.svg', color: 'bg-purple-800' },
-  fighting: { icon: '/pokemon-types/fighting.svg', color: 'bg-orange-600' },
-  normal: { icon: '/pokemon-types/normal.svg', color: 'bg-zinc-400' },
-  poison: { icon: '/pokemon-types/poison.svg', color: 'bg-violet-800' },
-  rock: { icon: '/pokemon-types/rock.svg', color: 'bg-stone-800' },
-  bug: { icon: '/pokemon-types/bug.svg', color: 'bg-lime-300' },
-  steel: { icon: '/pokemon-types/steel.svg', color: 'bg-gray-500' },
-  ice: { icon: '/pokemon-types/ice.svg', color: 'bg-sky-400' },   
-};
-
-interface PokemonDetails {
-  id: number;
-  name: string;
-  sprites: {
-    front_default: string;
-    other: {
-      dream_world: {
-        front_default: string;
-      };
-      'official-artwork': {
-        front_default: string;
-      };
-    };
-  };
-  types: Array<{ 
-    type: { 
-      name: string 
-    } 
-  }>;
-  weight: number;
-  height: number;
-  abilities: Array<{ 
-    ability: { 
-      name: string 
-    } 
-  }>;
-}
 
 export function PokemonCard({ pokemon }: { pokemon: PokemonDetails }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -69,10 +21,11 @@ export function PokemonCard({ pokemon }: { pokemon: PokemonDetails }) {
         <Card className="absolute w-full h-full [backface-visibility:hidden]">
           <CardBody className="overflow-visible p-0 flex flex-col items-center justify-center">
             <div className="w-48 h-48 flex items-center justify-center">
-              <ImageNext
+              <img
                 alt={`${pokemon.name} sprite`}
                 className="object-contain max-w-full max-h-full"
-                src={pokemon.sprites.other.dream_world.front_default || pokemon.sprites.other['official-artwork'].front_default}
+                src={pokemon.sprites?.other?.['official-artwork']?.front_default || pokemon.sprites?.other?.dream_world?.front_default || pokemon.sprites?.front_default || ''}
+                loading="lazy"
               />
             </div>
           </CardBody>
@@ -80,14 +33,14 @@ export function PokemonCard({ pokemon }: { pokemon: PokemonDetails }) {
             <b className="capitalize">{pokemon.name}</b>
             <div className="flex flex-wrap justify-center gap-1 mb-2">
               {pokemon.types.map((type) => {
-                const typeInfo = pokemonTypes[type.type.name as keyof typeof pokemonTypes] || pokemonTypes.normal;
+                const typeName = type.type.name;
                 return (
                   <div
-                    key={type.type.name}
-                    className="flex items-center gap-1 px-2 py-1 bg-gray-100 text-black rounded-full"
+                    key={typeName}
+                    className="flex items-center gap-1 px-2 py-1 bg-gray-100 dark:bg-gray-700 text-black dark:text-white rounded-full"
                   >
-                    <Image src={typeInfo.icon} alt={`${type.type.name} icon`} width={4} height={4} className={`${typeInfo.color} rounded-full w-4 h-4 mr-1`} />
-                    <span>{type.type.name}</span>
+                    <img src={`/pokemon-types/${typeName}.svg`} alt={`${typeName} icon`} className="w-4 h-4" />
+                    <span>{typeName}</span>
                   </div>
                 );
               })}
@@ -111,6 +64,9 @@ export function PokemonCard({ pokemon }: { pokemon: PokemonDetails }) {
             <p><strong>Height:</strong> {pokemon.height / 10} m</p>
             <p><strong>Weight:</strong> {pokemon.weight / 10} kg</p>
             <p><strong>Abilities:</strong> {pokemon.abilities.map(a => a.ability.name).join(', ')}</p>
+            {pokemon.description && (
+              <p className="text-sm text-center mt-2 opacity-80">{pokemon.description}</p>
+            )}
           </CardBody>
           <CardFooter className="justify-center">
             <Button

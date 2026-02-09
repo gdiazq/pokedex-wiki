@@ -5,39 +5,7 @@ import { PokemonCard } from '@/components/card/PokemonCard';
 import { BeatLoader } from "react-spinners";
 import { fetchPokemonJohto } from '@/api/fetchPokemonRegion/fetchPokemonJohto';
 import Navbar from '@/components/layout/Navbar';
-
-interface Pokemon {
-  name: string;
-  url: string;
-}
-
-interface PokemonDetails {
-  id: number;
-  name: string;
-  sprites: {
-    front_default: string;
-    other: {
-      dream_world: {
-        front_default: string;
-      };
-      'official-artwork': {
-        front_default: string;
-      };
-    };
-  };
-  types: Array<{ 
-    type: { 
-      name: string 
-    } 
-  }>;
-  weight: number;
-  height: number;
-  abilities: Array<{ 
-    ability: { 
-      name: string 
-    } 
-  }>;
-}
+import { Pokemon, PokemonDetails } from '@/types/pokemon';
 
 export default function Home() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -51,9 +19,17 @@ export default function Home() {
         const fetchedPokemon = await fetchPokemonJohto();
         setPokemon(fetchedPokemon);
 
-        const detailsPromises = fetchedPokemon.map(async (p: { url: string | URL | Request; }) => {
-          const response = await fetch(p.url);
-          return response.json();
+        const detailsPromises = fetchedPokemon.map(async (p: { url: string }) => {
+          const [pokemonRes, speciesRes] = await Promise.all([
+            fetch(p.url),
+            fetch(p.url.replace('/pokemon/', '/pokemon-species/'))
+          ]);
+          const pokemon = await pokemonRes.json();
+          const species = await speciesRes.json();
+          const flavorEntry = species.flavor_text_entries?.find(
+            (e: { language: { name: string } }) => e.language.name === 'en'
+          );
+          return { ...pokemon, description: flavorEntry?.flavor_text?.replace(/\f|\n/g, ' ') || '' };
         });
 
         const details = await Promise.all(detailsPromises);
