@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { PokemonCard } from '@/components/card/PokemonCard';
 import { BeatLoader } from 'react-spinners';
-import { fetchPokemonHusui } from '@/api/fetchPokemonRegion/fetchPokemonHusui.ts';
+import { fetchPokemonHusui } from '@/api/fetchPokemonRegion/fetchPokemonHusui';
 import Navbar from '@/components/layout/Navbar';
 import { PokemonDetails } from '@/types/pokemon';
 

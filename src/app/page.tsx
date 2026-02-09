@@ -103,7 +103,7 @@ export default function Home() {
                 </div>
                 {filteredPokemon.length === 0 && searchTerm && (
                   <p className="mt-6 text-center text-sm" style={{ color: 'var(--text-muted)' }}>
-                    No se encontraron Pokemon con "{searchTerm}".
+                    No se encontraron Pokemon con &quot;{searchTerm}&quot;.
                   </p>
                 )}
                 <div className="mt-8 flex justify-center">

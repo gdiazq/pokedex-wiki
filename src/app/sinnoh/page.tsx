@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { PokemonCard } from '@/components/card/PokemonCard';
 import { BeatLoader } from 'react-spinners';
-import { fetchPokemonSinnoh } from '@/api/fetchPokemonRegion/fetchPokemonSinnoh.ts';
+import { fetchPokemonSinnoh } from '@/api/fetchPokemonRegion/fetchPokemonSinnoh';
 import Navbar from '@/components/layout/Navbar';
 import { PokemonDetails } from '@/types/pokemon';
 

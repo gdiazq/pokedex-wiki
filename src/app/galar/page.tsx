@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { PokemonCard } from '@/components/card/PokemonCard';
 import { BeatLoader } from 'react-spinners';
-import { fetchPokemonGalar } from '@/api/fetchPokemonRegion/fetchPokemonGalar.ts';
+import { fetchPokemonGalar } from '@/api/fetchPokemonRegion/fetchPokemonGalar';
 import Navbar from '@/components/layout/Navbar';
 import { PokemonDetails } from '@/types/pokemon';
 
