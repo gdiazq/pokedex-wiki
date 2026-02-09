@@ -2,13 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { PokemonCard } from '@/components/card/PokemonCard';
-import { BeatLoader } from "react-spinners";
-import { fetchPokemonKalos } from '@/api/fetchPokemonRegion/fetchPokemonKalos';
+import { BeatLoader } from 'react-spinners';
+import { fetchPokemonKalos } from '@/api/fetchPokemonRegion/fetchPokemonKalos.ts';
 import Navbar from '@/components/layout/Navbar';
-import { Pokemon, PokemonDetails } from '@/types/pokemon';
+import { PokemonDetails } from '@/types/pokemon';
 
-export default function Home() {
-  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
+export default function RegionPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
@@ -17,7 +16,6 @@ export default function Home() {
     const loadPokemon = async () => {
       try {
         const fetchedPokemon = await fetchPokemonKalos();
-        setPokemon(fetchedPokemon);
 
         const detailsPromises = fetchedPokemon.map(async (p: { url: string }) => {
           const [pokemonRes, speciesRes] = await Promise.all([
@@ -34,9 +32,9 @@ export default function Home() {
 
         const details = await Promise.all(detailsPromises);
         setPokemonDetails(details);
-
-      } catch (error) {
-        setError('Error al cargar los Pokémon');
+        setError(null);
+      } catch {
+        setError('Error al cargar los Pokemon');
       } finally {
         setLoading(false);
       }
@@ -48,26 +46,29 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="p-4">
-        <div className="space-y-6 py-24 px-4">
-          <h1 className="text-5xl font-semibold text-black dark:text-white drop-shadow-md text-center">
-            Pokedex App
-          </h1>
-          <div>
-            {loading ? (
-              <div className="flex justify-center">
-                <BeatLoader />
-              </div>
-            ) : error ? (
-              <p className="text-center text-red-500">{error}</p>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {pokemonDetails.map((p) => (
-                  <PokemonCard key={p.id} pokemon={p} />
-                ))}
-              </div>
-            )}
-          </div>
+      <main>
+        <div className="page-wrap">
+          <section className="page-hero">
+            <h1 className="page-title">Region Kalos</h1>
+            <p className="page-subtitle">
+              Consulta Pokemon nativos de Kalos y revisa sus tipos, habilidades y descripcion.
+            </p>
+          </section>
+
+          {loading ? (
+            <div className="loading-shell">
+              <BeatLoader />
+              <p className="mt-3 text-sm" style={{ color: 'var(--text-muted)' }}>Cargando Pokemon...</p>
+            </div>
+          ) : error ? (
+            <p className="text-center text-red-500">{error}</p>
+          ) : (
+            <div className="pokemon-grid">
+              {pokemonDetails.map((p) => (
+                <PokemonCard key={p.id} pokemon={p} />
+              ))}
+            </div>
+          )}
         </div>
       </main>
     </>

@@ -1,14 +1,13 @@
 'use client'
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { BeatLoader } from "react-spinners";
+import { BeatLoader } from 'react-spinners';
 import Navbar from '@/components/layout/Navbar';
 import { fetchAllPokemon } from '@/api/fetchAllPokemon/fetchAllPokemon';
 import { PokemonCard } from '@/components/card/PokemonCard';
 import { Pokemon, PokemonDetails } from '@/types/pokemon';
 
 export default function Home() {
-  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
@@ -20,9 +19,8 @@ export default function Home() {
     setLoading(true);
     try {
       const fetchedPokemon = await fetchAllPokemon(offsetRef.current);
-      setPokemon((prev) => [...prev, ...fetchedPokemon]);
 
-      const detailsPromises = fetchedPokemon.map(async (p: { url: string }) => {
+      const detailsPromises = fetchedPokemon.map(async (p: Pokemon) => {
         const [pokemonRes, speciesRes] = await Promise.all([
           fetch(p.url),
           fetch(p.url.replace('/pokemon/', '/pokemon-species/'))
@@ -32,7 +30,10 @@ export default function Home() {
         const flavorEntry = species.flavor_text_entries?.find(
           (e: { language: { name: string } }) => e.language.name === 'en'
         );
-        return { ...pokemon, description: flavorEntry?.flavor_text?.replace(/\f|\n/g, ' ') || '' };
+        return {
+          ...pokemon,
+          description: flavorEntry?.flavor_text?.replace(/\f|\n/g, ' ') || ''
+        };
       });
 
       const details = await Promise.all(detailsPromises);
@@ -43,15 +44,16 @@ export default function Home() {
       });
 
       offsetRef.current += 50;
-    } catch (error) {
-      setError('Error al cargar los Pokémon');
+      setError(null);
+    } catch {
+      setError('Error al cargar los Pokemon');
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-      loadPokemon();
+    loadPokemon();
   }, [loadPokemon]);
 
   useEffect(() => {
@@ -65,50 +67,57 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="p-4">
-        <div className="space-y-6 py-24 px-4">
-          <h1 className="text-5xl font-semibold text-black dark:text-white drop-shadow-md text-center">
-            Pokedex App
-          </h1>
-          <div className="flex justify-center mb-6">
-            <input
-              type="text"
-              placeholder="Buscar Pokémon por nombre..."
-              className="px-4 py-2 border rounded-lg w-full max-w-md"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)} // Actualizar el término de búsqueda
-            />
+      <main>
+        <div className="page-wrap">
+          <section className="page-hero">
+            <h1 className="page-title">Pokedex Wiki</h1>
+            <p className="page-subtitle">
+              Explora, busca y compara Pokemon por nombre o por region. Cada carta incluye datos base,
+              tipos y descripcion para lectura rapida.
+            </p>
+            <div className="mx-auto mt-5 max-w-xl">
+              <input
+                type="text"
+                placeholder="Buscar Pokemon por nombre..."
+                className="search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </section>
 
-          </div>
-          <div>
+          <section>
             {loading && pokemonDetails.length === 0 ? (
-              <div className="flex justify-center">
+              <div className="loading-shell">
                 <BeatLoader />
+                <p className="mt-3 text-sm" style={{ color: 'var(--text-muted)' }}>Cargando Pokemon...</p>
               </div>
             ) : error ? (
               <p className="text-center text-red-500">{error}</p>
             ) : (
               <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="pokemon-grid">
                   {filteredPokemon.map((p) => (
                     <PokemonCard key={`${p.id}-${p.name}`} pokemon={p} />
                   ))}
                 </div>
                 {filteredPokemon.length === 0 && searchTerm && (
-                  <p className="text-center mt-4">No se encontraron Pokémon con &quot;{searchTerm}&quot;</p>
+                  <p className="mt-6 text-center text-sm" style={{ color: 'var(--text-muted)' }}>
+                    No se encontraron Pokemon con "{searchTerm}".
+                  </p>
                 )}
-                <div className="flex justify-center mt-6">
+                <div className="mt-8 flex justify-center">
                   <button
                     onClick={loadPokemon}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                    className="primary-action"
                     disabled={loading}
                   >
-                    {loading ? 'Cargando...' : 'Cargar 50 Pokémon más'}
+                    {loading ? 'Cargando...' : 'Cargar 50 Pokemon mas'}
                   </button>
                 </div>
               </>
             )}
-          </div>
+          </section>
         </div>
       </main>
     </>
